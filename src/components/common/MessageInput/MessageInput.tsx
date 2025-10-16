@@ -1,11 +1,14 @@
 import { ReactComponent as SendIcon } from "@/assets/actions/send.svg?react";
 import { useEffect, useRef, useState } from "react";
 
-const MessageInput = () => {
+type Props = {
+  isDisabled?: boolean;
+};
+
+const MessageInput = ({ isDisabled = false }: Props) => {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto resize textarea height as user types
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -28,7 +31,9 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="flex items-end gap-2.5 p-2.5 rounded-xl outline outline-neutral-500 focus-within:outline-2">
+    <div
+      className={`flex items-end gap-2.5 p-2.5 rounded-xl outline outline-neutral-500 focus-within:outline-2 ${isDisabled ? "opacity-30 pointer-events-none" : "opacity-100 pointer-events-auto"}`}
+    >
       <textarea
         ref={textareaRef}
         rows={1}
@@ -40,7 +45,7 @@ const MessageInput = () => {
       />
       <div className="h-5 flex justify-center items-center">
         <SendIcon
-          className="cursor-pointer shrink-0 h-full w-full"
+          className="cursor-pointer text-neutral-tertiary hover:scale-105 hover:text-primary-500 transition-all duration-200"
           onClick={handleSend}
         />
       </div>

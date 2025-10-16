@@ -1,4 +1,4 @@
-import type { Message } from "../MessagingView";
+import type { Message } from "@/components/MessagingView/MessagingView";
 
 const UserMessage = ({ message }: { message: Message }) => {
   return (

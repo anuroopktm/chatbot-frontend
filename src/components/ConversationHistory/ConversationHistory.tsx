@@ -2,17 +2,10 @@ import ChatFooter from "@/components/ChatFooter/ChatFooter";
 import MessageInput from "@/components/common/MessageInput/MessageInput";
 import AIMessage from "@/components/Message/AIMessage";
 import UserMessage from "@/components/Message/UserMessage";
+import type { Message } from "@/components/MessagingView/MessagingView";
 import { useLayoutEffect, useRef } from "react";
-import ChatEndMessage from "../ChatEndMessage/ChatEndMessage";
 
-export interface Message {
-  id: number;
-  sender: "ai" | "user";
-  text: string;
-  time: string;
-}
-
-const MessagingView = () => {
+const ConversationHistory = () => {
   const messages: Message[] = [
     {
       id: 1,
@@ -179,7 +172,6 @@ const MessagingView = () => {
   ];
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     scrollRef.current?.scrollTo({
@@ -190,52 +182,25 @@ const MessagingView = () => {
 
   useLayoutEffect(() => {
     scrollToBottom();
-  }, [scrollRef.current]);
-
-  useLayoutEffect(() => {
-    const updateFooterHeight = () => {
-      scrollToBottom();
-    };
-    updateFooterHeight();
-
-    const resizeObserver = new ResizeObserver(updateFooterHeight);
-    footerRef.current && resizeObserver.observe(footerRef.current);
-
-    return () => {
-      footerRef.current && resizeObserver.unobserve(footerRef.current);
-    };
   }, []);
-
-  console.log(
-    "scrollRef.current?.scrollHeight",
-    scrollRef.current?.scrollHeight,
-  );
 
   return (
     <div className="relative flex flex-col h-full p-2.5">
-      <div
-        className="flex-1 overflow-auto space-y-5 pb-[70px] pr-1.25"
-        ref={scrollRef}
-        id="message-container"
-      >
+      <div className="flex-1 overflow-auto space-y-5 pb-[70px]" ref={scrollRef}>
         {messages.map((msg) =>
           msg.sender === "ai" ? (
-            <AIMessage key={msg.id} message={msg} />
+            <AIMessage isDisabled={true} key={msg.id} message={msg} />
           ) : (
             <UserMessage key={msg.id} message={msg} />
           ),
         )}
-        <ChatEndMessage type="ticket" />
       </div>
-      <div
-        ref={footerRef}
-        className="sticky bottom-0 left-0 bg-white rounded-xl"
-      >
-        <MessageInput />
+      <div className="sticky bottom-0 left-0 bg-white rounded-xl">
+        <MessageInput isDisabled={true} />
         <ChatFooter />
       </div>
     </div>
   );
 };
 
-export default MessagingView;
+export default ConversationHistory;
