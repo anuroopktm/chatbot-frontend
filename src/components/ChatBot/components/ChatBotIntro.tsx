@@ -12,7 +12,7 @@ const ChatBotIntro = () => {
           services for customer experience.
         </p>
       </div>
-      <div className="shrink-0 flex items-end">
+      <div className="shrink-0 flex items-end w-40">
         <img className="w-full h-fit" src={AvatarImg} alt="Avatar" />
       </div>
     </div>

@@ -7,9 +7,9 @@ type Props = {};
 const TicketSummary = (props: Props) => {
   return (
     <Accordion icon={TicketIcon} title="Ticket Summary">
-      <div className="px-4 py-2 flex flex-col space-y-2.5">
+      <div className="p-2.5 flex flex-col space-y-2.5">
         <div>
-          <h6 className="text-neutral-primary font-semibold text-sm mb-1">
+          <h6 className="text-neutral-primary font-semibold text-sm">
             Issue Description:
           </h6>
           <p className="text-color-1000 font-normal text-xs">
@@ -18,7 +18,7 @@ const TicketSummary = (props: Props) => {
           </p>
         </div>
         <div>
-          <h6 className="text-neutral-primary font-semibold text-sm mb-1">
+          <h6 className="text-neutral-primary font-semibold text-sm">
             Steps Taken:
           </h6>
           <p className="text-color-1000 font-normal text-xs">
@@ -27,7 +27,7 @@ const TicketSummary = (props: Props) => {
           </p>
         </div>
         <div>
-          <h6 className="text-neutral-primary font-semibold text-sm mb-1">
+          <h6 className="text-neutral-primary font-semibold text-sm">
             Outcome:
             <Chips type="WARNING" label="Pending" className="ml-2.5" />
           </h6>
@@ -74,11 +74,11 @@ const TicketSummary = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
           <h6 className="text-neutral-primary font-semibold text-sm mb-1">
             Tags
           </h6>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-2.5">
             {[
               "I Phone",
               "No",

@@ -11,7 +11,7 @@ const ChatBotHeader = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="bg-brand-primary-light p-5 flex items-center">
       <div className="flex justify-items-start grow">
-        <LogoIcon className="h-6 w-fit" />
+        <LogoIcon className="h-7 w-fit" />
       </div>
       <div className="flex items-center gap-2.5">
         <RefreshSquareIcon

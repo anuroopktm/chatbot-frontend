@@ -28,7 +28,7 @@ const Accordion = ({
             {title}
           </h6>
           <ChevronDown
-            className={`transition-transform duration-200 ${
+            className={`transition-transform duration-500 ${
               isOpen ? "rotate-180" : "rotate-0"
             }`}
           />

@@ -15,12 +15,12 @@ function App() {
       {!isChatOpen && (
         <button
           onClick={toggleChat}
-          className="absolute bottom-5 right-5 h-16 w-16 overflow-hidden rounded-full bg-brand-primary-light px-1 pt-2 cursor-pointer shadow-md hover:scale-105 transition-transform duration-200"
+          className="group absolute bottom-5 right-5 h-16 w-16 overflow-hidden rounded-full bg-brand-primary-light px-1 pt-2 cursor-pointer shadow-md"
         >
           <img
             src={AvatarImg}
             alt="Avatar"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
           />
         </button>
       )}

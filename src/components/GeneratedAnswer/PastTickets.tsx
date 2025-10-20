@@ -38,17 +38,17 @@ const data: DataType[] = [
 const PastTickets = (props: Props) => {
   return (
     <Accordion icon={TimerIcon} title="Past Tickets">
-      <div className="p-2.5 flex flex-col space-y-2.5">
+      <div className="px-4 py-2 flex flex-col space-y-2.5">
         {data.map((item) => (
           <div key={item.ticket_id}>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between">
               <h6 className="text-neutral-primary font-semibold text-sm">
                 Ticket ID:
                 <Chips type="INFO" label={item.ticket_id} className="ml-2.5" />
               </h6>
               <Chips type={ChipTypes[item.status]} label={item.status} />
             </div>
-            <h6 className="text-neutral-primary font-semibold text-sm">
+            <h6 className="text-neutral-primary font-semibold text-sm mb-1">
               {item.title}
             </h6>
             <p className="text-color-1000 font-normal text-xs">
