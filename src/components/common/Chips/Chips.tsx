@@ -7,6 +7,7 @@ export type ChipLabel = "Closed" | "In Progress" | "Open" | "Info" | "Link";
 type Props = {
   label: string;
   type?: ChipType;
+  href?: string;
   className?: string;
 };
 
@@ -18,7 +19,12 @@ export const ChipTypes: Record<ChipLabel, ChipType> = {
   Link: "LINK",
 };
 
-const Chips = ({ label = "", type = undefined, className = "" }: Props) => {
+const Chips = ({
+  label = "",
+  type = undefined,
+  className = "",
+  href = "",
+}: Props) => {
   switch (type) {
     case "SUCCESS":
       return (
@@ -54,12 +60,15 @@ const Chips = ({ label = "", type = undefined, className = "" }: Props) => {
       );
     case "LINK":
       return (
-        <span
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-md bg-white border-2 border-border-variant-2 font-normal text-xs text-black ${className}`}
         >
           <LinkIcon className="shrink-0 h-4 w-4" />
           {label}
-        </span>
+        </a>
       );
     default:
       return (

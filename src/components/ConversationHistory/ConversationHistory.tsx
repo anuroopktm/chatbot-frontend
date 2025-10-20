@@ -1,204 +1,105 @@
-import ChatFooter from "@/components/ChatFooter/ChatFooter";
-import MessageInput from "@/components/common/MessageInput/MessageInput";
-import AIMessage from "@/components/Message/AIMessage";
-import UserMessage from "@/components/Message/UserMessage";
-import type { Message } from "@/components/MessagingView/MessagingView";
-import { useLayoutEffect, useRef } from "react";
+import AvatarImg from "@/assets/branding/avatar.png";
+import { formatChatTime } from "@/utils/formatChatTime";
+
+const data = [
+  {
+    id: 1,
+    title: "Uses of CX Hub",
+    description:
+      "The CX Hub is designed to enhance customer experience by unifying communication channels, improving service efficiency, and offering tools for better customer interaction, feedback collection, and lifecycle management.",
+    last_updated: "2025-10-20T12:30:00Z", // Today
+  },
+  {
+    id: 2,
+    title: "User Enquiry",
+    description:
+      "The CX Hub, or Customer Experience Hub, is a centralized platform that enables users to raise queries, track responses, and receive timely support from the team, ensuring smooth communication between customers and service providers.",
+    last_updated: "2025-10-20T11:00:00Z", // 1 hr ago → Today
+  },
+  {
+    id: 3,
+    title: "Key Features",
+    description:
+      "It offers centralized customer data management, intelligent analytics dashboards, performance tracking, and automated workflows to streamline business operations while improving customer satisfaction.",
+    last_updated: "2025-10-19T15:45:00Z", // Yesterday
+  },
+  {
+    id: 4,
+    title: "Integration Options",
+    description:
+      "The system allows seamless integration with CRM platforms, third-party applications, ticketing systems, and support tools through APIs, webhooks, and custom connectors to ensure smooth data exchange.",
+    last_updated: "2025-10-18T09:20:00Z", // 2 days ago
+  },
+  {
+    id: 5,
+    title: "Analytics Capabilities",
+    description:
+      "It provides real-time tracking of customer journeys, sentiment analysis, performance metrics, and detailed insights that help businesses make informed decisions and enhance overall service quality.",
+    last_updated: "2025-10-15T14:10:00Z", // 5 days ago (Within last week)
+  },
+  {
+    id: 6,
+    title: "Customization",
+    description:
+      "The platform can be customized to align with your brand identity, workflows, user roles, and business requirements, offering flexibility in UI components, modules, and access permissions.",
+    last_updated: "2025-10-13T11:35:00Z", // 1 week ago
+  },
+  {
+    id: 7,
+    title: "Security Features",
+    description:
+      "It includes enterprise-grade security measures such as role-based access control, data encryption, audit logging, multi-factor authentication, and compliance with GDPR and ISO standards.",
+    last_updated: "2025-10-10T16:50:00Z", // 10 days ago
+  },
+  {
+    id: 8,
+    title: "Reporting Tools",
+    description:
+      "The CX Hub offers comprehensive reporting tools, customizable dashboards, exportable data formats, and visual insights to monitor performance, team productivity, and customer feedback trends.",
+    last_updated: "2025-10-08T13:25:00Z", // 12 days ago
+  },
+  {
+    id: 9,
+    title: "Mobile Access",
+    description:
+      "Users can access all essential CX Hub functionalities through mobile applications, enabling on-the-go monitoring, notifications, and task management with a responsive and user-friendly interface.",
+    last_updated: "2025-10-05T08:40:00Z", // 15 days ago
+  },
+  {
+    id: 10,
+    title: "Support Resources",
+    description:
+      "The platform provides 24/7 customer support, a comprehensive knowledge base, training resources, FAQs, and documentation to assist users in resolving issues and maximizing platform usage.",
+    last_updated: "2024-10-01T12:15:00Z", // 3 weeks ago
+  },
+];
 
 const ConversationHistory = () => {
-  const messages: Message[] = [
-    {
-      id: 1,
-      sender: "ai",
-      text: "Hello 👋! I’m ThoughtMinds Assistant. How can I help you today?",
-      time: "24 Mar 2024, 10:00:12 AM",
-    },
-    {
-      id: 2,
-      sender: "user",
-      text: "Hi! Can you tell me about ThoughtMinds?",
-      time: "24 Mar 2024, 10:00:45 AM",
-    },
-    {
-      id: 3,
-      sender: "ai",
-      text: "Sure! ThoughtMinds is an AI-driven customer support platform designed to automate and enhance business communication.",
-      time: "24 Mar 2024, 10:01:02 AM",
-    },
-    {
-      id: 4,
-      sender: "user",
-      text: "Interesting. What kind of businesses use it?",
-      time: "24 Mar 2024, 10:01:30 AM",
-    },
-    {
-      id: 5,
-      sender: "ai",
-      text: "It’s used by startups, SaaS companies, and enterprise teams for automating FAQs, lead management, and support ticketing.",
-      time: "24 Mar 2024, 10:02:15 AM",
-    },
-    {
-      id: 6,
-      sender: "user",
-      text: "Can I integrate it with my website?",
-      time: "24 Mar 2024, 10:03:01 AM",
-    },
-    {
-      id: 7,
-      sender: "ai",
-      text: "Yes! You can embed our chatbot widget directly using a simple JavaScript snippet or integrate it with React, Vue, or Angular projects.",
-      time: "24 Mar 2024, 10:03:30 AM",
-    },
-    {
-      id: 8,
-      sender: "user",
-      text: "Do you offer a free trial?",
-      time: "24 Mar 2024, 10:04:02 AM",
-    },
-    {
-      id: 9,
-      sender: "ai",
-      text: "Absolutely! We offer a 14-day free trial with full access to all premium features. No credit card required.",
-      time: "24 Mar 2024, 10:04:35 AM",
-    },
-    {
-      id: 10,
-      sender: "user",
-      text: "That’s great! What’s your pricing after the trial?",
-      time: "24 Mar 2024, 10:05:12 AM",
-    },
-    {
-      id: 11,
-      sender: "ai",
-      text: "We have three plans — Starter ($29/month), Professional ($79/month), and Enterprise (custom pricing).",
-      time: "24 Mar 2024, 10:05:48 AM",
-    },
-    {
-      id: 12,
-      sender: "user",
-      text: "Do you provide API access?",
-      time: "24 Mar 2024, 10:06:15 AM",
-    },
-    {
-      id: 13,
-      sender: "ai",
-      text: "Yes, our platform provides a RESTful API for sending, receiving, and managing chatbot conversations programmatically.",
-      time: "24 Mar 2024, 10:06:47 AM",
-    },
-    {
-      id: 14,
-      sender: "user",
-      text: "How secure is your API?",
-      time: "24 Mar 2024, 10:07:09 AM",
-    },
-    {
-      id: 15,
-      sender: "ai",
-      text: "We use HTTPS, token-based authentication, and AES-256 encryption for all data exchanges.",
-      time: "24 Mar 2024, 10:07:40 AM",
-    },
-    {
-      id: 16,
-      sender: "user",
-      text: "Can I get analytics on chat performance?",
-      time: "24 Mar 2024, 10:08:12 AM",
-    },
-    {
-      id: 17,
-      sender: "ai",
-      text: "Yes! You can track response rates, average resolution times, and customer satisfaction metrics on your dashboard.",
-      time: "24 Mar 2024, 10:08:50 AM",
-    },
-    {
-      id: 18,
-      sender: "user",
-      text: "Is ThoughtMinds only for English, or does it support multiple languages?",
-      time: "24 Mar 2024, 10:09:15 AM",
-    },
-    {
-      id: 19,
-      sender: "ai",
-      text: "We currently support 10+ languages including English, Spanish, Hindi, and German. You can configure it per chat instance.",
-      time: "24 Mar 2024, 10:09:50 AM",
-    },
-    {
-      id: 20,
-      sender: "user",
-      text: "Wow, that’s impressive! Can I get a demo link?",
-      time: "24 Mar 2024, 10:10:10 AM",
-    },
-    {
-      id: 21,
-      sender: "ai",
-      text: "Sure thing! You can try our live demo here: https://demo.thoughtminds.ai",
-      time: "24 Mar 2024, 10:10:42 AM",
-    },
-    {
-      id: 22,
-      sender: "user",
-      text: "Thanks, I’ll check that out!",
-      time: "24 Mar 2024, 10:11:05 AM",
-    },
-    {
-      id: 23,
-      sender: "ai",
-      text: "You’re welcome 😊! Would you like me to email you the setup guide as well?",
-      time: "24 Mar 2024, 10:11:30 AM",
-    },
-    {
-      id: 24,
-      sender: "user",
-      text: "Yes, please send it to my registered email.",
-      time: "24 Mar 2024, 10:11:58 AM",
-    },
-    {
-      id: 25,
-      sender: "ai",
-      text: "Got it! The setup guide has been sent. Is there anything else I can help you with today?",
-      time: "24 Mar 2024, 10:12:21 AM",
-    },
-    {
-      id: 26,
-      sender: "user",
-      text: "No, that’s all. Thanks a lot!",
-      time: "24 Mar 2024, 10:12:45 AM",
-    },
-    {
-      id: 27,
-      sender: "ai",
-      text: "Happy to help! Have a great day 🌟",
-      time: "24 Mar 2024, 10:13:00 AM",
-    },
-  ];
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  };
-
-  useLayoutEffect(() => {
-    scrollToBottom();
-  }, []);
-
   return (
-    <div className="relative flex flex-col h-full p-2.5">
-      <div className="flex-1 overflow-auto space-y-5 pb-[70px]" ref={scrollRef}>
-        {messages.map((msg) =>
-          msg.sender === "ai" ? (
-            <AIMessage isDisabled={true} key={msg.id} message={msg} />
-          ) : (
-            <UserMessage key={msg.id} message={msg} />
-          ),
-        )}
-      </div>
-      <div className="sticky bottom-0 left-0 bg-white rounded-xl">
-        <MessageInput isDisabled={true} />
-        <ChatFooter />
-      </div>
+    <div className="relative flex flex-col h-full m-2.5 overflow-auto space-y-5">
+      {data.map((item) => (
+        <div
+          key={item.id}
+          className="flex gap-2.5 items-center p-2.5 bg-white border border-border-variant-1 shadow-drop-400 rounded-xl cursor-pointer hover:bg-brand-primary-light"
+        >
+          <div className="bg-color-100 rounded-full h-9 w-9 overflow-hidden shrink-0">
+            <img src={AvatarImg} alt="Avatar" className="w-full h-full mt-1" />
+          </div>
+          <div className="flex flex-col gap-0.5 grow">
+            <div className="flex justify-between items-center gap-2.5">
+              <h6 className="text-neutral-primary font-semibold text-sm flex-1 line-clamp-1">
+                {item.title}
+              </h6>
+              <span className="text-neutral-400 font-medium text-xs">
+                {formatChatTime(item.last_updated)}
+              </span>
+            </div>
+            <p className="text-color-1000 font-normal text-xs line-clamp-2">
+              {item.description}
+            </p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

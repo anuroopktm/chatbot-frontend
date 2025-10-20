@@ -14,7 +14,7 @@ const ChatBotOption = ({
   return (
     <div
       onClick={handleOption}
-      className="border hover:bg-brand-primary-light transition-colors duration-200 cursor-pointer border-border-variant-1 shadow-drop-400 rounded-[10px] p-2.5 flex items-center gap-2.5"
+      className="border hover:bg-brand-primary-light transition-colors duration-200 cursor-pointer border-border-variant-1 shadow-drop-400 rounded-xl p-2.5 flex items-center gap-2.5"
     >
       <div className="w-10 h-10 rounded-md flex justify-center items-center bg-brand-primary-light">
         <Icon className="w-5 h-5" />

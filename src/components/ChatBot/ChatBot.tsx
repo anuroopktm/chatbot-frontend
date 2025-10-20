@@ -2,6 +2,7 @@ import { useViewStore } from "@/context/ViewContext";
 import ChatLayout from "../ChatLayout/ChatLayout";
 import ConversationHistory from "../ConversationHistory/ConversationHistory";
 import GeneratedAnswer from "../GeneratedAnswer/GeneratedAnswer";
+import HelpdeskTickets from "../HelpdeskTickets/HelpdeskTickets";
 import MessagingView from "../MessagingView/MessagingView";
 import PastTickets from "../PastTickets/PastTickets";
 import TicketSummary from "../TicketSummary/TicketSummary";
@@ -21,13 +22,14 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
       )}
       {view === "ASK_QUESTION" && <MessagingView />}
       {view === "CONVERSATION_HISTORY" && <ConversationHistory />}
-      {view === "HELPDESK_TICKETS" && (
+      {view === "SMART_SUPPORT" && (
         <div className="m-2.5 space-y-2.5 overflow-auto">
           <TicketSummary />
           <PastTickets />
           <GeneratedAnswer />
         </div>
       )}
+      {view === "HELPDESK_TICKETS" && <HelpdeskTickets />}
     </ChatLayout>
   );
 };

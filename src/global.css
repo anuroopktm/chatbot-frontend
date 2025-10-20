@@ -32,3 +32,9 @@
   --shadow-e3: 0px 16px 40px -8px #585C5F29;
   --shadow-e2: 0px 16px 32px -12px #585C5F1A;
 }
+
+@layer base {
+  a {
+    @apply text-blue-500 no-underline;
+  }
+}
